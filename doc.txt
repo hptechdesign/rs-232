@@ -5,7 +5,7 @@ Url:     http://www.teuniz.net/RS-232/
 E-mail:  teuniz@protonmail.com
 License: GPLv3
 
-Last revision: May 31, 2019
+Last revision: August, 2020
 
 
 

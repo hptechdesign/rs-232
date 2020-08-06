@@ -3,7 +3,7 @@
 *
 * Author: Teunis van Beelen
 *
-* Copyright (C) 2005 - 2019 Teunis van Beelen
+* Copyright (C) 2005 - 2020 Teunis van Beelen
 *
 * Email: teuniz@protonmail.com
 *
@@ -11,8 +11,7 @@
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+* the Free Software Foundation, either version 3 of the License.
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,8 +25,8 @@
 */
 
 
-/* Last revision: May 31, 2019 */
-/* Added support for hardware flow control using RTS and CTS lines */
+/* Last revision: August 6, 2020 */
+/* Solved a problem related to FreeBSD and some baudrates not recognized. */
 /* For more info and how to use this library, visit: http://www.teuniz.net/RS-232/ */
 
 
@@ -105,6 +104,7 @@ int RS232_OpenComport(int comport_number, int baudrate, const char *mode, int fl
                    break;
     case  460800 : baudr = B460800;
                    break;
+#if defined(__linux__)
     case  500000 : baudr = B500000;
                    break;
     case  576000 : baudr = B576000;
@@ -127,6 +127,7 @@ int RS232_OpenComport(int comport_number, int baudrate, const char *mode, int fl
                    break;
     case 4000000 : baudr = B4000000;
                    break;
+#endif
     default      : printf("invalid baudrate\n");
                    return(1);
                    break;
