@@ -707,7 +707,10 @@ int RS232_SendByte(int comport_number, unsigned char byte)
 {
   int n;
 
-  WriteFile(Cport[comport_number], &byte, 1, (LPDWORD)((void *)&n), NULL);
+  if(!WriteFile(Cport[comport_number], &byte, 1, (LPDWORD)((void *)&n), NULL))
+  {
+    return(1);
+  }
 
   if(n<0)  return(1);
 
