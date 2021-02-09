@@ -3,7 +3,7 @@
 *
 * Author: Teunis van Beelen
 *
-* Copyright (C) 2005 - 2020 Teunis van Beelen
+* Copyright (C) 2005 - 2021 Teunis van Beelen
 *
 * Email: teuniz@protonmail.com
 *
@@ -25,8 +25,7 @@
 */
 
 
-/* Last revision: August 6, 2020 */
-/* Solved a problem related to FreeBSD and some baudrates not recognized. */
+/* Last revision: February 9, 2021 */
 /* For more info and how to use this library, visit: http://www.teuniz.net/RS-232/ */
 
 
@@ -697,7 +696,10 @@ int RS232_PollComport(int comport_number, unsigned char *buf, int size)
 /* added the void pointer cast, otherwise gcc will complain about */
 /* "warning: dereferencing type-punned pointer will break strict aliasing rules" */
 
-  ReadFile(Cport[comport_number], buf, size, (LPDWORD)((void *)&n), NULL);
+  if(!ReadFile(Cport[comport_number], buf, size, (LPDWORD)((void *)&n), NULL))
+  {
+    return -1;
+  }
 
   return(n);
 }

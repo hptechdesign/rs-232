@@ -3,7 +3,7 @@
 *
 * Author: Teunis van Beelen
 *
-* Copyright (C) 2005 - 2020 Teunis van Beelen
+* Copyright (C) 2005 - 2021 Teunis van Beelen
 *
 * Email: teuniz@protonmail.com
 *
@@ -23,8 +23,6 @@
 *
 ***************************************************************************
 */
-
-/* Last revision: August 6, 2020 */
 
 /* For more info and how to use this library, visit: http://www.teuniz.net/RS-232/ */
 
