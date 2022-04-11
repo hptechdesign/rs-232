@@ -3,7 +3,7 @@
 *
 * Author: Teunis van Beelen
 *
-* Copyright (C) 2005 - 2021 Teunis van Beelen
+* Copyright (C) 2005 - 2022 Teunis van Beelen
 *
 * Email: teuniz@protonmail.com
 *
@@ -25,8 +25,8 @@
 */
 
 
-/* Last revision: February 9, 2021 */
-/* For more info and how to use this library, visit: http://www.teuniz.net/RS-232/ */
+/* Last revision: April 11, 2022 */
+/* For more info and how to use this library, visit: https://www.teuniz.net/RS-232/ */
 
 
 #include "rs232.h"
@@ -34,7 +34,7 @@
 
 #if defined(__linux__) || defined(__FreeBSD__)   /* Linux & FreeBSD */
 
-#define RS232_PORTNR  38
+#define RS232_PORTNR    (38)
 
 
 int Cport[RS232_PORTNR],
@@ -189,9 +189,9 @@ int RS232_OpenComport(int comport_number, int baudrate, const char *mode, int fl
   }
 
 /*
-http://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html
+https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html
 
-http://man7.org/linux/man-pages/man3/termios.3.html
+https://man7.org/linux/man-pages/man3/termios.3.html
 */
 
   Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
@@ -243,7 +243,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
     return(1);
   }
 
-/* http://man7.org/linux/man-pages/man4/tty_ioctl.4.html */
+/* https://man7.org/linux/man-pages/man4/tty_ioctl.4.html */
 
   if(ioctl(Cport[comport_number], TIOCMGET, &status) == -1)
   {
@@ -358,7 +358,7 @@ TIOCM_RNG       RNG (ring)
 TIOCM_RI        see TIOCM_RNG
 TIOCM_DSR       DSR (data set ready)
 
-http://man7.org/linux/man-pages/man4/tty_ioctl.4.html
+https://man7.org/linux/man-pages/man4/tty_ioctl.4.html
 */
 
 int RS232_IsDCDEnabled(int comport_number)
@@ -473,6 +473,24 @@ void RS232_disableRTS(int comport_number)
   if(ioctl(Cport[comport_number], TIOCMSET, &status) == -1)
   {
     perror("unable to set portstatus");
+  }
+}
+
+
+void RS232_enableBREAK(int comport_number)
+{
+  if(ioctl(Cport[comport_number], TIOCSBRK, NULL) == -1)  /* Turn break on, that is, start sending zero bits. */
+  {
+    perror("unable to turn break on");
+  }
+}
+
+
+void RS232_disableBREAK(int comport_number)
+{
+  if(ioctl(Cport[comport_number], TIOCCBRK, NULL) == -1)  /* Turn break off, that is, stop sending zero bits. */
+  {
+    perror("unable to turn break off");
   }
 }
 
@@ -626,10 +644,13 @@ int RS232_OpenComport(int comport_number, int baudrate, const char *mode, int fl
 
 /*
 http://msdn.microsoft.com/en-us/library/windows/desktop/aa363145%28v=vs.85%29.aspx
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-buildcommdcbandtimeoutsa
 
 http://technet.microsoft.com/en-us/library/cc732236.aspx
+https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/cc732236(v=ws.11)
 
 https://docs.microsoft.com/en-us/windows/desktop/api/winbase/ns-winbase-_dcb
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-buildcommdcba
 */
 
   Cport[comport_number] = CreateFileA(comports[comport_number],
@@ -740,6 +761,7 @@ void RS232_CloseComport(int comport_number)
 
 /*
 http://msdn.microsoft.com/en-us/library/windows/desktop/aa363258%28v=vs.85%29.aspx
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getcommmodemstatus
 */
 
 int RS232_IsDCDEnabled(int comport_number)
@@ -810,9 +832,31 @@ void RS232_disableRTS(int comport_number)
 }
 
 /*
-https://msdn.microsoft.com/en-us/library/windows/desktop/aa363428%28v=vs.85%29.aspx
-*/
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-setcommbreak
+ */
+void RS232_enableBREAK(int comport_number)
+{
+  if(!SetCommBreak(Cport[comport_number]))  /* Turn break on, that is, start sending zero bits. */
+  {
+    perror("unable to turn break on");
+  }
+}
 
+/*
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-clearcommbreak
+*/
+void RS232_disableBREAK(int comport_number)
+{
+  if(!ClearCommBreak(Cport[comport_number]))  /* Turn break off, that is, stop sending zero bits. */
+  {
+    perror("unable to turn break off");
+  }
+}
+
+/*
+https://msdn.microsoft.com/en-us/library/windows/desktop/aa363428%28v=vs.85%29.aspx
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-purgecomm
+*/
 void RS232_flushRX(int comport_number)
 {
   PurgeComm(Cport[comport_number], PURGE_RXCLEAR | PURGE_RXABORT);

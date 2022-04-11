@@ -5,7 +5,7 @@ Url:     http://www.teuniz.net/RS-232/
 E-mail:  teuniz@protonmail.com
 License: GPLv3
 
-Last revision: August, 2020
+Last revision: April, 2022
 
 
 
@@ -93,6 +93,18 @@ int RS232_IsCTSEnabled(int comport_number)
 int RS232_IsDCDEnabled(int comport_number)
 
   Checks the status of the DCD-pin. Returns 1 when the the DCD line is high (active state), otherwise 0.
+
+
+The following functions are normally not needed but can be used to send a "BREAK":
+==================================================================================
+
+void RS232_enableBREAK(int comport_number)
+
+  Turn break on, that is, start sending zero bits.
+
+void RS232_disableBREAK(int comport_number)
+
+  Turn break off, that is, stop sending zero bits. (this is the default)
 
 
 The following functions are normally not needed but can be used to empty the rx/tx buffers:

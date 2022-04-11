@@ -3,7 +3,7 @@
 *
 * Author: Teunis van Beelen
 *
-* Copyright (C) 2005 - 2021 Teunis van Beelen
+* Copyright (C) 2005 - 2022 Teunis van Beelen
 *
 * Email: teuniz@protonmail.com
 *
@@ -71,6 +71,8 @@ void RS232_enableDTR(int);
 void RS232_disableDTR(int);
 void RS232_enableRTS(int);
 void RS232_disableRTS(int);
+void RS232_enableBREAK(int);
+void RS232_disableBREAK(int);
 void RS232_flushRX(int);
 void RS232_flushTX(int);
 void RS232_flushRXTX(int);
