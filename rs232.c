@@ -25,7 +25,7 @@
 */
 
 
-/* Last revision: April 11, 2022 */
+/* Last revision: April 13, 2022 */
 /* For more info and how to use this library, visit: https://www.teuniz.net/RS-232/ */
 
 
@@ -515,7 +515,7 @@ void RS232_flushRXTX(int comport_number)
 
 #else  /* windows */
 
-#define RS232_PORTNR  32
+#define RS232_PORTNR  (48)
 
 HANDLE Cport[RS232_PORTNR];
 
@@ -527,7 +527,11 @@ const char *comports[RS232_PORTNR]={"\\\\.\\COM1",  "\\\\.\\COM2",  "\\\\.\\COM3
                                     "\\\\.\\COM17", "\\\\.\\COM18", "\\\\.\\COM19", "\\\\.\\COM20",
                                     "\\\\.\\COM21", "\\\\.\\COM22", "\\\\.\\COM23", "\\\\.\\COM24",
                                     "\\\\.\\COM25", "\\\\.\\COM26", "\\\\.\\COM27", "\\\\.\\COM28",
-                                    "\\\\.\\COM29", "\\\\.\\COM30", "\\\\.\\COM31", "\\\\.\\COM32"};
+                                    "\\\\.\\COM29", "\\\\.\\COM30", "\\\\.\\COM31", "\\\\.\\COM32",
+                                    "\\\\.\\COM33", "\\\\.\\COM34", "\\\\.\\COM35", "\\\\.\\COM36",
+                                    "\\\\.\\COM37", "\\\\.\\COM38", "\\\\.\\COM39", "\\\\.\\COM40",
+                                    "\\\\.\\COM41", "\\\\.\\COM42", "\\\\.\\COM43", "\\\\.\\COM44",
+                                    "\\\\.\\COM45", "\\\\.\\COM46", "\\\\.\\COM47", "\\\\.\\COM48"};
 
 char mode_str[128];
 
