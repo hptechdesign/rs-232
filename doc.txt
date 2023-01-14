@@ -5,7 +5,7 @@ Url:     http://www.teuniz.net/RS-232/
 E-mail:  teuniz@protonmail.com
 License: GPLv3
 
-Last revision: April, 2022
+Last revision: January 14, 2023
 
 
 
@@ -179,12 +179,22 @@ List of comport numbers, possible baudrates and modes:
 29  ircomm1   COM30
 30  cuau0     COM31
 31  cuau1     COM32
-32  cuau2     n.a.
-33  cuau3     n.a.
-34  cuaU0     n.a.
-35  cuaU1     n.a.
-36  cuaU2     n.a.
-37  cuaU3     n.a.
+32  cuau2     COM33
+33  cuau3     COM34
+34  cuaU0     COM35
+35  cuaU1     COM36
+36  cuaU2     COM37
+37  cuaU3     COM38
+38  n.a.      COM39
+39  n.a.      COM40
+40  n.a.      COM41
+41  n.a.      COM42
+42  n.a.      COM43
+43  n.a.      COM44
+44  n.a.      COM45
+45  n.a.      COM46
+46  n.a.      COM47
+47  n.a.      COM48
 
 Linux     windows
 50        n.a.

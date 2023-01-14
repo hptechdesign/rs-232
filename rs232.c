@@ -3,7 +3,7 @@
 *
 * Author: Teunis van Beelen
 *
-* Copyright (C) 2005 - 2022 Teunis van Beelen
+* Copyright (C) 2005 - 2023 Teunis van Beelen
 *
 * Email: teuniz@protonmail.com
 *
@@ -25,7 +25,7 @@
 */
 
 
-/* Last revision: April 13, 2022 */
+/* Last revision: January 14, 2023 */
 /* For more info and how to use this library, visit: https://www.teuniz.net/RS-232/ */
 
 
@@ -37,11 +37,9 @@
 #define RS232_PORTNR    (38)
 
 
-int Cport[RS232_PORTNR],
-    error;
+int Cport[RS232_PORTNR];
 
-struct termios new_port_settings,
-       old_port_settings[RS232_PORTNR];
+struct termios old_port_settings[RS232_PORTNR];
 
 const char *comports[RS232_PORTNR]={"/dev/ttyS0","/dev/ttyS1","/dev/ttyS2","/dev/ttyS3","/dev/ttyS4","/dev/ttyS5",
                                     "/dev/ttyS6","/dev/ttyS7","/dev/ttyS8","/dev/ttyS9","/dev/ttyS10","/dev/ttyS11",
@@ -54,8 +52,11 @@ const char *comports[RS232_PORTNR]={"/dev/ttyS0","/dev/ttyS1","/dev/ttyS2","/dev
 
 int RS232_OpenComport(int comport_number, int baudrate, const char *mode, int flowctrl)
 {
-  int baudr,
+  int err,
+      baudr,
       status;
+
+  struct termios new_port_settings;
 
   if((comport_number>=RS232_PORTNR)||(comport_number<0))
   {
@@ -209,8 +210,8 @@ https://man7.org/linux/man-pages/man3/termios.3.html
     return(1);
   }
 
-  error = tcgetattr(Cport[comport_number], old_port_settings + comport_number);
-  if(error==-1)
+  err = tcgetattr(Cport[comport_number], old_port_settings + comport_number);
+  if(err==-1)
   {
     close(Cport[comport_number]);
     flock(Cport[comport_number], LOCK_UN);  /* free the port so that others can use it. */
@@ -233,8 +234,8 @@ https://man7.org/linux/man-pages/man3/termios.3.html
   cfsetispeed(&new_port_settings, baudr);
   cfsetospeed(&new_port_settings, baudr);
 
-  error = tcsetattr(Cport[comport_number], TCSANOW, &new_port_settings);
-  if(error==-1)
+  err = tcsetattr(Cport[comport_number], TCSANOW, &new_port_settings);
+  if(err==-1)
   {
     tcsetattr(Cport[comport_number], TCSANOW, old_port_settings + comport_number);
     close(Cport[comport_number]);
