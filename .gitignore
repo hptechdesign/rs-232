@@ -1,4 +1,5 @@
-#
+# HP - this is a different way of doing git ignores than I've used before,
+# Keep using for now but review.
 *
 #
 !*.[ch]
@@ -11,4 +12,5 @@
 !LICENSE
 !Makefile
 !README.md
+!CMakeLists.txt
 #
